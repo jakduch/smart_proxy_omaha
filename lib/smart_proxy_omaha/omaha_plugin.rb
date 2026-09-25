@@ -12,13 +12,15 @@ module Proxy::Omaha
     load_classes ::Proxy::Omaha::ConfigurationLoader
     load_dependency_injection_wirings ::Proxy::Omaha::ConfigurationLoader
 
-    load_validators :distribution_validator => ::Proxy::Omaha::PluginValidators::DistributionValidator
+    load_validators :content_path_validator => ::Proxy::Omaha::PluginValidators::ContentPathValidator,
+                    :distribution_validator => ::Proxy::Omaha::PluginValidators::DistributionValidator
 
     default_settings :sync_releases => 0,
                      :contentpath => '/var/lib/foreman-proxy/omaha/content',
                      :distribution => 'coreos'
 
     validate_readable :contentpath
+    validate :contentpath, :content_path_validator => true
 
     validate :distribution, :distribution_validator => true
   end
