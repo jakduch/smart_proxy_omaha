@@ -16,9 +16,11 @@ module Proxy::Omaha
 
     default_settings :sync_releases => 0,
                      :contentpath => '/var/lib/foreman-proxy/omaha/content',
+                     :purge_old_releases => false,
                      :distribution => 'coreos'
 
     validate_readable :contentpath
+    validate :purge_old_releases, :boolean => true
 
     validate :distribution, :distribution_validator => true
   end

@@ -23,6 +23,8 @@ For the Smart Proxy plugin, follow the [smart-proxy plugin installation instruct
 
 For the initial sync of releases you need to run the binary `smart-proxy-omaha-sync` as `foreman-proxy` user.
 
+The `sync_releases` setting controls how many recent releases are downloaded for each release channel. Set `purge_old_releases` to `true` to also delete older local releases after all retained releases have synchronized successfully. Cleanup is disabled by default.
+
 Do not forget to register the smart proxy in Foreman via the user interface.
 
 ## Host Configuration
