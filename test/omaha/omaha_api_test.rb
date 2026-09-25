@@ -69,6 +69,12 @@ class TestMetadataProvider
   def store(metadata); end
 end
 
+class TestSyncStatus
+  def last_sync_time
+    '2026-09-25T03:45:00Z'
+  end
+end
+
 module Proxy::Omaha
   module DependencyInjection
     include Proxy::DependencyInjection::Accessors
@@ -77,6 +83,7 @@ module Proxy::Omaha
         c.singleton_dependency :foreman_client_impl, TestForemanClient
         c.singleton_dependency :release_repository_impl, TestReleaseRepository
         c.singleton_dependency :metadata_provider_impl, TestMetadataProvider
+        c.singleton_dependency :sync_status_impl, TestSyncStatus
         c.singleton_dependency :distribution_impl, (lambda do
           ::Proxy::Omaha::Distribution::Coreos.new
         end)
@@ -163,6 +170,12 @@ class OmahaApiTest < Test::Unit::TestCase
     parsed = JSON.parse(last_response.body)
     assert_kind_of Array, parsed
     assert_equal ['1068.9.0', '1122.2.0'], parsed.map { |track| track['name'] }
+  end
+
+  def test_get_sync_status
+    get '/sync', {}, { 'HTTP_HOST' => 'localhost' }
+    assert last_response.ok?, "Last response was not ok: #{last_response.status} #{last_response.body}"
+    assert_equal({ 'last_sync_time' => '2026-09-25T03:45:00Z' }, JSON.parse(last_response.body))
   end
 
   def test_ca

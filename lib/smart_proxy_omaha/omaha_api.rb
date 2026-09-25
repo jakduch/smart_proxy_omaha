@@ -12,6 +12,7 @@ module Proxy::Omaha
     inject_attr :release_repository_impl, :release_repository
     inject_attr :metadata_provider_impl, :metadata_provider
     inject_attr :distribution_impl, :distribution
+    inject_attr :sync_status_impl, :sync_status
 
     post '/v1/update' do
       request.body.rewind
@@ -50,6 +51,12 @@ module Proxy::Omaha
           :file_urls => release.file_urls(request.base_url)
         )
       end.to_json
+    end
+
+    get '/sync' do
+      {
+        :last_sync_time => sync_status.last_sync_time,
+      }.to_json
     end
 
     get '/ca' do

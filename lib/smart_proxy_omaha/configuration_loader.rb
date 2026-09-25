@@ -5,6 +5,7 @@ module ::Proxy::Omaha
       require 'smart_proxy_omaha/foreman_client'
       require 'smart_proxy_omaha/omaha_api'
       require 'smart_proxy_omaha/distribution'
+      require 'smart_proxy_omaha/sync_status'
     end
 
     def load_dependency_injection_wirings(container_instance, settings)
@@ -20,6 +21,9 @@ module ::Proxy::Omaha
       end)
       container_instance.singleton_dependency :metadata_provider_impl, (lambda do
         Proxy::Omaha::MetadataProvider.new(:contentpath => settings[:contentpath])
+      end)
+      container_instance.singleton_dependency :sync_status_impl, (lambda do
+        Proxy::Omaha::SyncStatus.new(:contentpath => settings[:contentpath])
       end)
     end
   end
