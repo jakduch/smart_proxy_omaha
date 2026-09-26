@@ -107,6 +107,12 @@ $ update_engine_client -check_for_update
 $ journalctl -u update-engine.service
 ```
 
+## Foreman delivery queue
+
+Facts and reports are persisted in `queuepath` before they are delivered to Foreman.
+Delivery happens in the background and is retried every `queue_retry_interval` seconds,
+so an unavailable Foreman instance does not interrupt Omaha requests.
+
 ## Proxy Support
 
 In the settings file you can specify a http proxy that is used to download Omaha content.

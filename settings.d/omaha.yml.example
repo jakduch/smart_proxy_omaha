@@ -1,6 +1,8 @@
 ---
 :enabled: true
 :contentpath: '/var/lib/foreman-proxy/omaha/content'
+:queuepath: '/var/lib/foreman-proxy/omaha/queue'
+:queue_retry_interval: 30
 :sync_releases: 2
 :distribution: coreos
 #:proxy: 'http://127.0.0.1:3128'

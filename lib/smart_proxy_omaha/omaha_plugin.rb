@@ -16,6 +16,8 @@ module Proxy::Omaha
 
     default_settings :sync_releases => 0,
                      :contentpath => '/var/lib/foreman-proxy/omaha/content',
+                     :queuepath => '/var/lib/foreman-proxy/omaha/queue',
+                     :queue_retry_interval => 30,
                      :distribution => 'coreos'
 
     validate_readable :contentpath
